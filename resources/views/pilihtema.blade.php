@@ -9,7 +9,7 @@
     </div>
     <div class="box-body">
         <div>
-            <a class="btn btn-default" href="<?php echo cb()->getAdminUrl('/pilih_tema/'.$photobook->id.'/0'); ?>" role="button">Semua Tema</a>    
+            <!-- <a class="btn btn-default" href="<?php echo cb()->getAdminUrl('/pilih_tema/'.$photobook->id.'/0'); ?>" role="button">Semua Tema</a> -->
             @foreach ($kategori_tema as $item)
                 <a class="btn btn-default" href="<?php echo cb()->getAdminUrl('/pilih_tema/'.$photobook->id.'/'.$item->id); ?>" role="button">Tema {{$item->nama}}</a>    
             @endforeach

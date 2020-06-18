@@ -24,7 +24,7 @@ class PilihTemaController extends CBController
         }
         else {
             $data['kategori_tema_dipilih'] ="Semua Jenis Tema";
-            $data['tema_photobook'] =DB::table('tema_photobook')->get();
+            $data['tema_photobook'] =[];
         }
         $data['kategori_tema'] = DB::table('kategori_tema')->get();
         $data['photobook'] = DB::table('project_layout')->find($photobook_id);

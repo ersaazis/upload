@@ -171,7 +171,7 @@ class AdminPhotobookController extends CBController {
         $this->addActionButton("Selesai", function($row) {
 		    return cb()->getAdminUrl('/photobook/save/'.$row->id);
         }, function($row) {
-            if($row->status != 'Upload Foto')
+            if($row->status != 'Upload Foto' or $row->tema_photobook_id == null)
                 return false;
             else return true;
         }, "fa fa-check", 'success btn-block',true);
