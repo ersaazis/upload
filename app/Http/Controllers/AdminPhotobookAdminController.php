@@ -20,8 +20,8 @@ class AdminPhotobookAdminController extends CBController {
         $this->addSelectTable("Jenis Photobook","jenis_photobook_id",["table"=>"jenis_photobook","value_option"=>"id","display_option"=>"nama","sql_condition"=>""])->filterable(true);
         $this->addSelectTable("Tema Photobook","tema_photobook_id",["table"=>"tema_photobook","value_option"=>"id","display_option"=>"nama","sql_condition"=>""])->showAdd(false)->showEdit(false)->filterable(true);
 
-        $this->addImage("Foto Cover","foto_cover")->showAdd(false)->showEdit(false)->required(false)->encrypt(true)->showIndex(false);
-		$this->addText("Text Cover","text_cover")->showAdd(false)->showEdit(false)->required(false)->showIndex(false)->strLimit(150)->maxLength(255);
+        $this->addImage("Foto Cover","foto_cover")->showAdd(false)->showEdit(false)->required(false)->encrypt(true);
+		$this->addText("Text Cover","text_cover")->showAdd(false)->showEdit(false)->required(false)->strLimit(150)->maxLength(255);
 
         $this->addFile("Hasil Desain Cover","hasil_cover")->required(false)->encrypt(true);
 		$this->addFile("Hasil Desain Photobook","hasil_layout")->required(false)->encrypt(true);
