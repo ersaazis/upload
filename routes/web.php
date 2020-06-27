@@ -18,7 +18,10 @@ Route::group([
     'middleware' => ['web', \ersaazis\cb\middlewares\CBBackend::class],
     'prefix' => cb()->getAdminPath(),
 ], function () {
+    Route::get('/generate/member/photobook', 'GenerateUserPhotobookController@getIndex');
+    Route::post('/generate/member/photobook', 'GenerateUserPhotobookController@postSave');
     Route::get('/pilih_tema/save/{photobook_id}/{tema_photobook_id}', 'PilihTemaController@saveTema');
     Route::get('/pilih_tema/{photobook_id}/{tema_photobook_id}', 'PilihTemaController@pilihTema');
     Route::get('/photobook/save/{id}', 'AdminPhotobookController@save');
+    Route::get('/photobook_admin/download/{id}', 'AdminPhotobookAdminController@download');
 });

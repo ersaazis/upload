@@ -4,6 +4,7 @@ use ersaazis\cb\controllers\CBController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class AdminPhotobookAdminController extends CBController {
 
@@ -28,7 +29,14 @@ class AdminPhotobookAdminController extends CBController {
 		$this->addDatetime("Created At","created_at")->required(false)->showAdd(false)->showEdit(false)->showIndex(false);
 		$this->addDatetime("Updated At","updated_at")->required(false)->showAdd(false)->showEdit(false)->showIndex(false);
 		$this->addSelectOption("Status","status")->options(['Upload Foto'=>'Upload Foto','Proses Desain'=>'Proses Desain','Proses Produksi'=>'Proses Produksi','Selesai'=>'Selesai'])->filterable(true);
-		
+        
+        $this->addActionButton("", function($row) {
+		    return cb()->getAdminUrl('/photobook_admin/download/'.$row->primary_key);
+        }, function($row) {
+            if($row->status != 'Upload Foto')
+                return true;
+        }, "fa fa-download", 'success');
+
         $this->addSubModule("Lihat Foto", AdminLihatFotoController::class, "project_layout_id", function ($row) {
             $user = DB::table('users')->find($row->users_id);
             return [
@@ -70,5 +78,32 @@ class AdminPhotobookAdminController extends CBController {
 
 
         return cb()->redirectBack( cbLang("the_data_has_been_deleted"), 'success');
+    }
+    public function download($id){
+        $foto=DB::table('upload')->where('project_layout_id',$id)->get();
+        $zipname = $id.'.zip';
+        $zip = new ZipArchive;
+        $zip->open($zipname, ZipArchive::CREATE);
+        foreach($foto as $item){
+            $file=explode('/',$item->foto);
+            if($item->urutan != "")
+                $fileName=$item->urutan."_".$file[count($file)-1];
+            else
+                $fileName=$file[count($file)-1];
+
+            if($item->text_custom != "")
+                $zip->addFromString($fileName.'.txt', $item->text_custom);
+            $zip->addFile($item->foto,$fileName);
+        }
+        $zip->close();
+        ignore_user_abort(true);
+
+        header('Content-Type: application/zip');
+        header('Content-disposition: attachment; filename='.$zipname);
+        header('Content-Length: ' . filesize($zipname));
+        readfile($zipname);
+        if(file_exists(public_path($zipname))){
+            unlink(public_path($zipname));
+        }
     }
 }

@@ -26,6 +26,7 @@ class AdminUploadFotoController extends CBController {
         $this->addSelectTable("Kode Transaksi Photobook","project_layout_id",["table"=>"project_layout","value_option"=>"id","display_option"=>"kode_transaksi","sql_condition"=>""])->showIndex(false);
 		$this->addImage("Foto","foto")->encrypt(true);
         $this->addNumber("Urutan","urutan")->required(false);
+        $this->addText("Text Tambahan","text_custom")->required(false)->placeholder('Contoh : Hari Yang Indah')->help(' Boleh Dikosongkan');
 		$this->addDatetime("Created At","created_at")->required(false)->showAdd(false)->showIndex(false)->showEdit(false);
         $this->addDatetime("Updated At","updated_at")->required(false)->showAdd(false)->showIndex(false)->showEdit(false);
         

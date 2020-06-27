@@ -16,6 +16,7 @@ class AdminLihatFotoController extends CBController {
 
         $this->addSelectTable("Photobook","project_layout_id",["table"=>"project_layout","value_option"=>"id","display_option"=>"kode_transaksi","sql_condition"=>""])->showIndex(false)->showAdd(false)->showEdit(false);
 		$this->addText("Urutan","urutan")->showAdd(false)->showEdit(false)->strLimit(150)->maxLength(255);
+        $this->addText("Text Tambahan","text_custom")->required(false)->showAdd(false)->showEdit(false)->placeholder('Contoh : Hari Yang Indah')->help(' Boleh Dikosongkan');
 		$this->addImage("Foto","foto")->encrypt(true);
 		$this->addDatetime("Created At","created_at")->required(false)->showIndex(false)->showAdd(false)->showEdit(false);
 		$this->addDatetime("Updated At","updated_at")->required(false)->showIndex(false)->showAdd(false)->showEdit(false);
