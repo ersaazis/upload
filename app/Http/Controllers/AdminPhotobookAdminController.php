@@ -102,8 +102,8 @@ class AdminPhotobookAdminController extends CBController {
         header('Content-disposition: attachment; filename='.$zipname);
         header('Content-Length: ' . filesize($zipname));
         readfile($zipname);
-        if(file_exists(public_path($zipname))){
-            unlink(public_path($zipname));
-        }
+        // if(file_exists(public_path($zipname))){
+        //     unlink(public_path($zipname));
+        // }
     }
 }
