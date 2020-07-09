@@ -18,14 +18,6 @@ class PilihTemaController extends CBController
     }
     public function pilihTema($photobook_id,$kategori_tema_id){
         $data = [];
-        if($kategori_tema_id != 0){
-            $data['kategori_tema_dipilih'] ="Tema ".DB::table('kategori_tema')->find($kategori_tema_id)->nama;
-            $data['tema_photobook'] =DB::table('tema_photobook')->where(['kategori_tema_id'=>$kategori_tema_id])->get();
-        }
-        else {
-            $data['kategori_tema_dipilih'] ="Semua Jenis Tema";
-            $data['tema_photobook'] =[];
-        }
         $data['kategori_tema'] = DB::table('kategori_tema')->get();
         $data['photobook'] = DB::table('project_layout')->find($photobook_id);
         if($data['photobook']->users_id != cb()->session()->id())
@@ -33,6 +25,16 @@ class PilihTemaController extends CBController
         $data['jenis_photobook'] = DB::table('jenis_photobook')->find($data['photobook']->jenis_photobook_id);
         $data['pageIcon'] = "fa fa-window-maximize";
         $data['page_title'] = "Pilih Tema";
+
+        if($kategori_tema_id != 0){
+            $data['kategori_tema_dipilih'] ="Tema ".DB::table('kategori_tema')->find($kategori_tema_id)->nama;
+            $data['tema_photobook'] =DB::table('tema_photobook')->where(['kategori_tema_id'=>$kategori_tema_id,'jenis_photobook_id'=>$data['photobook']->jenis_photobook_id])->get();
+        }
+        else {
+            $data['kategori_tema_dipilih'] ="Semua Jenis Tema";
+            $data['tema_photobook'] =[];
+        }
+
         return view("pilihtema", $data);
     }
 }
